@@ -1,24 +1,36 @@
 import React from 'react';
+
+import {
+  BrowserRouter,
+  Route,
+  Redirect,
+  Switch,
+} from 'react-router-dom';
+
 import './App.scss';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import MyNavbar from '../components/shared/MyNavbar/MyNavbar';
+
+import Home from '../components/pages/Home/Home';
+
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <BrowserRouter>
+          <React.Fragment>
+            <MyNavbar />
+            <div className="row text-center">
+              <Switch>
+                <Route path="/"><Home /></Route>
+                <Redirect from="*" to="/"/>
+              </Switch>
+            </div>
+          </React.Fragment>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
 export default App;
