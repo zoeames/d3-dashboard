@@ -22,7 +22,16 @@ const getBattleNetToken = () => axios.request({
   },
 });
 
+const getBattleTag = (bearerToken) => axios.request({
+  url: 'https://us.battle.net/oauth/userinfo',
+  method: 'GET',
+  headers: {
+    Authorization: `Bearer ${bearerToken}`,
+  },
+});
+
 export default {
   getBattleNetAuthCode,
   getBattleNetToken,
+  getBattleTag,
 };
