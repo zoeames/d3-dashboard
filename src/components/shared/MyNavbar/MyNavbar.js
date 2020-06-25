@@ -20,15 +20,37 @@ class MyNavbar extends React.Component {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
+  logMeOut = () => {
+    localStorage.clear();
+    this.props.changeAuthedStatus();
+  }
+
   render() {
     const { isOpen } = this.state;
+
+    const buildNavbar = () => {
+      const { authed } = this.props;
+      if (authed) {
+        return (
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <NavLink tag={RRNavLink} to='/home'>Home</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={this.logMeOut}>Logout</NavLink>
+            </NavItem>
+          </Nav>
+        );
+      }
+      return <Nav className="ml-auto" navbar></Nav>;
+    };
     return (
       <div className="myNavbar">
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/">D3 Dashboard</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={isOpen} navbar>
-            <Nav className="ml-auto" navbar></Nav>
+            {buildNavbar()}
           </Collapse>
         </Navbar>
       </div>
