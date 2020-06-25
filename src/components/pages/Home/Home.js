@@ -7,14 +7,18 @@ import authData from '../../../helpers/data/authData';
 class Home extends React.Component {
   state = {
     bnetToken: {},
+    battleTag: '',
   }
 
   componentDidMount() {
     authData.getBattleNetToken()
       .then((resp) => {
-        console.log('token response', resp.data);
         localStorage.setItem('bnetToken', JSON.stringify(resp.data));
         this.setState({ bnetToken: resp.data });
+        authData.getBattleTag(resp.data.access_token).then((resp2) => {
+          localStorage.setItem('battleTag', JSON.stringify(resp2.data.battletag));
+          this.setState({ battleTag: resp2.data.battletag });
+        });
       }).catch((err) => console.error('unable to get battle net token: ', err));
   }
 
